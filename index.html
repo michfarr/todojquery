@@ -90,7 +90,7 @@
         <label for="todo-1">Sweep the floor</label>
       </li>
       <li class="todo completed">
-        <input id="todo-2" type="checkbox" value="1" checked>
+        <input id="todo-2" type="checkbox" value="1" checked="checked" name="todo-2">
         <label for="todo-2">Dust the vases</label>
       </li>
     </ul>
@@ -98,6 +98,8 @@
       Todo: <span id="todo-count">1</span> •
       Done: <span id="completed-count">0</span> •
       Total: <span id="total-count">1</span>
+
+      <p><a href="#" id="clean-up">Clean up</a></p>
     </div>
   </div>
 
@@ -159,9 +161,15 @@
       }
     }
 
-    $("form").bind('submit', submitTodo);
-    $("input[type=checkbox]").bind('change', toggleDone);
+    function cleanUpDoneTodos(event) {
+      event.preventDefault();
+      $.when($(".completed").remove())
+        .then(updateCounters);
+    }
 
+    $("input[type=checkbox]").bind('change', toggleDone);
+    $("form").bind('submit', submitTodo);
+    $("#clean-up").bind('click', cleanUpDoneTodos);
   </script>
 </body>
 </html>
